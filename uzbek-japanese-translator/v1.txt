@@ -1,0 +1,78 @@
+"use client";
+import React, { useState } from 'react';
+// import { Button } from "@/components/ui/button"
+
+const Translator = () => {
+  const [text, setText] = useState('');
+  const [translatedText, setTranslatedText] = useState('');
+  const [language, setLanguage] = useState('ja'); // default to Japanese
+
+  const translateText = async () => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'accept': 'application/json',
+        'content-type': 'application/json',
+        'Authorization': `Bearer ${process.env.NEXT_PUBLIC_LINGVANEX_API_KEY}`
+      },
+      body: JSON.stringify({
+        from: 'uz_UZ', // Uzbek
+        to: language,
+        data: text,
+        platform: 'api'
+      })
+      
+    };
+
+    try {
+      const response = await fetch('https://api-b2b.backenster.com/b1/api/v3/translate', options);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setTranslatedText(data.result);
+    } catch (error) {
+      console.error('Failed to fetch translation:', error);
+    }
+  };
+
+  return (
+    <div className="p-4">
+      <h1 className="text-2xl mb-4">Uzbek to Japanese Translator</h1>
+      <textarea
+        className="w-full p-2 border mb-4"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder="Enter text in Uzbek..."
+      />
+      <div className="mb-4">
+        <select
+          className="p-2 border"
+          value={language}
+          onChange={(e) => setLanguage(e.target.value)}
+        >
+          <option value="ja">Japanese</option>
+          <option value="en">English</option>
+          <option value="ru">Russia</option>
+          {/* Add more languages as needed */}
+        </select>
+      </div>
+      <button
+        className="bg-blue-500 text-white px-4 py-2"
+        onClick={translateText}
+      >
+        Translate
+      </button>
+      {translatedText && (
+        <div className="mt-4 p-2 border">
+          <h2 className="text-xl mb-2">Translation:</h2>
+          <p>{translatedText}</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Translator;
