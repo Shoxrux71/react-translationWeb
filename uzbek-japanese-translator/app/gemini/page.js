@@ -1,5 +1,21 @@
 "use client";
 import React, { useState } from 'react';
+import Link from 'next/link';
+import { Label } from "@/components/ui/label"
+import { Switch } from "@/components/ui/switch"
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea"; 
+// import { Select } from "@/components/ui/select"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 const Translator = () => {
   const [text, setText] = useState('');
@@ -82,8 +98,15 @@ const Translator = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
       <div className="w-full max-w-md bg-white shadow-md rounded-lg p-6">
+      <div className='flex justify-between mb-2'>
+        {/* <Link href={"/gemini"}> <button className='border p-3 rounded'>gemini</button></Link> */}
+           <div className="flex items-center space-x-3">
+             <Switch id="airplane-mode" />
+              <Label htmlFor="airplane-mode"><span className='text-green-500'>gemini ...</span></Label>
+           </div>
+      </div>
         <h1 className="text-2xl font-semibold mb-4 text-center">
           O'zbek tilida so'z yoki gap kiriting...
           <span className="text-blue-500 tracking-wider text-sm"> imloviy xatolarsiz </span>

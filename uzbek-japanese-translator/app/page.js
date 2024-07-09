@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import Translator from '../components/Translator';
+import Translator from '../components/Translator.js';
 
 export default function Home() {
   return (
